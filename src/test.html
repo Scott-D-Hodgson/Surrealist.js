@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>Test</title>
+        <script type='application/javascript' src='index.js'></script>
+    </head>
+    <body style="background-color: lightgrey;" onload="Load();">
+        <h1>Test</h1>
+        <ul id="list" style="padding-left: 0;  display: inline-flex; flex-wrap: wrap; width:100%">
+            <li id="0" style="border-width: 1; border-style: solid; list-style: none; text-align: center; margin: 3px; border-radius: 5px; background-color: white; height: 30px; width: 30px;">0</li>
+            <li id="1" style="border-width: 1; border-style: solid; list-style: none; text-align: center; margin: 3px; border-radius: 5px; background-color: white; height: 30px; width: 30px;">1</li>
+            <li id="2" style="border-width: 1; border-style: solid; list-style: none; text-align: center; margin: 3px; border-radius: 5px; background-color: white; height: 30px; width: 30px;">2</li>
+            <li id="3" style="border-width: 1; border-style: solid; list-style: none; text-align: center; margin: 3px; border-radius: 5px; background-color: white; height: 30px; width: 30px;">3</li>
+            <li id="4" style="border-width: 1; border-style: solid; list-style: none; text-align: center; margin: 3px; border-radius: 5px; background-color: white; height: 30px; width: 30px;">4</li>
+            <li id="5" style="border-width: 1; border-style: solid; list-style: none; text-align: center; margin: 3px; border-radius: 5px; background-color: white; height: 30px; width: 30px;">5</li>
+            <li id="6" style="border-width: 1; border-style: solid; list-style: none; text-align: center; margin: 3px; border-radius: 5px; background-color: white; height: 30px; width: 30px;">6</li>
+            <li id="7" style="border-width: 1; border-style: solid; list-style: none; text-align: center; margin: 3px; border-radius: 5px; background-color: white; height: 30px; width: 30px;">7</li>
+            <li id="8" style="border-width: 1; border-style: solid; list-style: none; text-align: center; margin: 3px; border-radius: 5px; background-color: white; height: 30px; width: 30px;">8</li>
+        </ul>
+        <button onClick="Swap();">Swap</button>
+        <button onClick="Shuffle();">Shuffle</button>
+        <button onClick="TopToBottom();">Top to Bottom</button>
+        <button onClick="BottomToTop();">Bottom to Top</button>
+        <button onClick="RemoveById();">Remove by ID</button>
+        <script>
+            Surrealist('list', {});
+            function Shuffle() {
+                Surrealist.Shuffle('list');
+            };   
+            function Swap() {
+                Surrealist.Swap('list', '2', '8');
+            };
+            function TopToBottom() {
+                Surrealist.TopToBottom('list');
+            };  
+            function BottomToTop() {
+                Surrealist.BottomToTop('list');
+            };
+            function RemoveById() {
+                Surrealist.RemoveByIds('list', ['5', '2', '7']);
+            };
+            function Load() {
+                setTimeout(function () { Surrealist.Shuffle('list') }, 30000);
+            };
+        </script>
+    </body>
+</html>
