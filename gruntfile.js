@@ -4,11 +4,11 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         uglify: {
             options: {
-                banner: '// <%= pkg.name %> - v<%= pkg.version %> (<%= grunt.template.today("yyyy-mm-dd") %>)\n' + '// https://www.nraboy.com\n'
+                banner: '// <%= pkg.name %> - v<%= pkg.version %> (<%= grunt.template.today("yyyy-mm-dd") %>)\n' + '// https://github.com/Scott-D-Hodgson/Surrealist.js.git\n'
             },
             build: {
                 src: 'src/*.js',
-                dest: 'dist/surrealistjs.min.js'
+                dest: 'dist/surrealist.min.js'
             }
         },
         jshint: {
