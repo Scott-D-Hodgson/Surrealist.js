@@ -385,7 +385,7 @@
         };
         if (removed) {
             Surrealist._removalTransitions = itemsToRemove;
-            Surrealist._ArrangeItemElementsBySequence(ul, itemsToKeep.concat(itemsToRemove));
+            Surrealist._ArrangeItemsBySequence(ul, itemsToKeep.concat(itemsToRemove));
             window.requestAnimationFrame(Surrealist.Transition);
         };
     };
@@ -396,7 +396,7 @@
             var tempKey = itemKeys[index1];
             itemKeys[index1] = itemKeys[index2];
             itemKeys[index2] = tempKey;
-            Surrealist._ArrangeItemElementsBySequence(ul, itemKeys);
+            Surrealist._ArrangeItemsBySequence(ul, itemKeys);
             window.requestAnimationFrame(Surrealist.Transition);
         }
     };
@@ -405,58 +405,83 @@
         var itemKeys = Surrealist._GetPreItemKeys(ul);
         if (itemKeys) {
             itemKeys = Surrealist._ShuffleArray(itemKeys);
-            Surrealist._ArrangeItemElementsBySequence(ul, itemKeys);
+            Surrealist._ArrangeItemsBySequence(ul, itemKeys);
             window.requestAnimationFrame(Surrealist.Transition);
         }
+    }
+
+    Surrealist.FirstToLast = function(ul) {
+        var itemKeys = Surrealist._SortPreItemKeys(ul, 'sequence');
+        if (itemKeys && itemKeys.length > 1) {
+            var tempKey = itemKeys.shift();
+            itemKeys.push(tempKey);
+            Surrealist._ArrangeItemsBySequence(ul, itemKeys);
+            window.requestAnimationFrame(Surrealist.Transition);
+        }
+    }
+
+    Surrealist.LeftToRight = function(ul) {
+        Surrealist.FirstToLast(ul);
     }
 
     Surrealist.TopToBottom = function(ul) {
+        Surrealist.FirstToLast(ul);
+    }
+
+    Surrealist.LastToFirst = function(ul) {
         var itemKeys = Surrealist._SortPreItemKeys(ul, 'sequence');
         if (itemKeys && itemKeys.length > 1) {
+            itemKeys = itemKeys.reverse();
             var tempKey = itemKeys.shift();
             itemKeys.push(tempKey);
-            Surrealist._ArrangeItemElementsBySequence(ul, itemKeys);
+            itemKeys = itemKeys.reverse();
+            Surrealist._ArrangeItemsBySequence(ul, itemKeys);
             window.requestAnimationFrame(Surrealist.Transition);
         }
+    }
+
+    Surrealist.RightToLeft = function(ul) {
+        Surrealist.LastToFirst(ul);
     }
 
     Surrealist.BottomToTop = function(ul) {
-        var itemKeys = Surrealist._SortPreItemKeys(ul, 'sequence');
-        if (itemKeys && itemKeys.length > 1) {
-            itemKeys = itemKeys.reverse();
-            var tempKey = itemKeys.shift();
-            itemKeys.push(tempKey);
-            itemKeys = itemKeys.reverse();
-            Surrealist._ArrangeItemElementsBySequence(ul, itemKeys);
-            window.requestAnimationFrame(Surrealist.Transition);
-        }
+        Surrealist.LastToFirst(ul);
     }
 
-    Surrealist._ArrangeItemElementsBySequence = function(ul, ids) {
-        for (var i = 0, ilen = ids.length; i < ilen; i++) {
-            item = Surrealist._GetItemElement(ids[i]);
-            if (item) {
-                var parent = item.parentNode;
-                parent.removeChild(item);
-                parent.appendChild(item);
-            }
-        }
+    Surrealist._ArrangeItemsBySequence = function(ulTagId, ilTagId) {
+        Surrealist._ProcessOnMatchingUlTags(ulTagId, function (ulTagId) {
+            if (!Array.isArray(ilTagId)) {
+                ilTagId = [ ilTagId ];
+            };
+            for (var ilIndex = 0, ilLen = ilTagId.length; ilIndex < ilLen; ilIndex++) {
+                var ilElement = Surrealist._GetItemElement(ilTagId[ilIndex]);
+                var ulElement = ilElement.parentNode;
+                if (ulElement.id === ulTagId) {
+                    ulElement.removeChild(ilElement);
+                    ulElement.appendChild(ilElement);
+                };
+            };
+        });
     }
 
-    /*
-    Surrealist.ShuffleItems = function(id) {
-        var removed = false;
-        var item = document.getElementById(id);
-        var type = typeof item;
-        if (type !== 'function' && type === 'object' && item && item.tagName === 'LI') {
-            item.parentNode.removeChild(item);
-            removed = true;
+    Surrealist._ProcessOnMatchingUlTags = function(ulTagId, func) {
+        if (ulTagId) {
+            var preUlTagIds;
+            if (Array.isArray(ulTagId)) {
+                for (var ulIndex = 0, ulLen = ulTagId.length; ulIndex < ulLen; ulIndex++) {
+                    preUlTagIds = Surrealist._GetPreListKeys();
+                    if (preUlTagIds.includes(ulTagId[ulIndex])) {
+                        func(ulTagId[ulIndex]);
+                    };
+                };
+            } else {
+                preUlTagIds = Surrealist._GetPreListKeys();
+                if (preUlTagIds.includes(ulTagId)) {
+                    func(ulTagId);
+                };
+            };
         };
-        if (removed) {
-            window.requestAnimationFrame(Surrealist.Transition);
-        };
-    };
-    */
+    }
 
     Surrealist._idOffset = 0;
     Surrealist._preTransitions = {};
@@ -469,6 +494,5 @@
 
     // Current version
     Surrealist.VERSION = '1.0.0';
-
 
 })();

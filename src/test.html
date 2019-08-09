@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>Test</title>
-        <script type='application/javascript' src='surrrealist.js'></script>
+        <script type='application/javascript' src='surrealist.js'></script>
     </head>
     <body style="background-color: lightgrey;" onload="Load();">
         <h1>Test</h1>
@@ -18,7 +18,11 @@
         </ul>
         <button onClick="Swap();">Swap</button>
         <button onClick="Shuffle();">Shuffle</button>
+        <button onClick="FirstToLast();">First to Last</button>
         <button onClick="TopToBottom();">Top to Bottom</button>
+        <button onClick="LeftToRight();">Left to Right</button>
+        <button onClick="LastToFirst();">Last to First</button>
+        <button onClick="RightToLeft();">Right to Left</button>
         <button onClick="BottomToTop();">Bottom to Top</button>
         <button onClick="RemoveById();">Remove by ID</button>
         <script>
@@ -29,11 +33,23 @@
             function Swap() {
                 Surrealist.Swap('list', '2', '8');
             };
+            function FirstToLast() {
+                Surrealist.FirstToLast('list');
+            };  
             function TopToBottom() {
                 Surrealist.TopToBottom('list');
             };  
+            function LeftToRight() {
+                Surrealist.LeftToRight('list');
+            };  
+            function LastToFirst() {
+                Surrealist.LastToFirst('list');
+            };
             function BottomToTop() {
                 Surrealist.BottomToTop('list');
+            };
+            function RightToLeft() {
+                Surrealist.RightToLeft('list');
             };
             function RemoveById() {
                 Surrealist.RemoveByIds('list', ['5', '2', '7']);
